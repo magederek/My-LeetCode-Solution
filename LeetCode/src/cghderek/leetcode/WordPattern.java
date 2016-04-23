@@ -1,6 +1,7 @@
 package cghderek.leetcode;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
 /* 290. Word Pattern
@@ -61,4 +62,29 @@ public class WordPattern {
 		System.out.println(wp.wordPattern(pattern4, str4));
 	}
 
+}
+
+// a better solution use HashSet instead of HashMap (by Blankj)
+class Solution {
+    public boolean wordPattern(String pattern, String str) {
+        int len = pattern.length();
+        String[] strs = str.split(" ");
+        int size = strs.length;
+        if (len != size)
+            return false;
+        String[] map = new String[26];
+        HashSet<String> set = new HashSet<String>();
+        for (int i = 0; i < len; ++i) {
+            int idx = pattern.charAt(i) - 'a';
+            String s = strs[i];
+            if (map[idx] == null) {
+                if (set.contains(s))
+                    return false;
+                map[idx] = s;
+                set.add(s);
+            } else if (!map[idx].equals(s))
+                return false;
+        }
+        return true;
+    }
 }
